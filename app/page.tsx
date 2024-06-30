@@ -1,41 +1,65 @@
 "use client";
+import { Input } from "@/components/ui/input";
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useState } from "react";
 
 export default function Home() {
   const [odds, setOdds] = useState("");
-  const [bet, setBet] = useState("");
+  const [wager, setWager] = useState("");
 
-  const netWin = calculateNetWin(odds, bet);
-  const amountLost = parseFloat(bet) || 0;
+  const netWin = calculateNetWin(odds, wager);
+  const amountLost = parseFloat(wager) || 0;
 
   return (
-    <div>
-      <label>
-        Moneyline Odds:
-        <input
-          name="odds"
-          value={odds}
-          onChange={(e) => setOdds(e.target.value)}
-        />
-      </label>
-      <label>
-        Bet:
-        <input
-          name="bet"
-          value={bet}
-          onChange={(e) => setBet(e.target.value)}
-        />
-      </label>
-      <div>
-        Implied Probability: {moneylineToImpliedProbability(odds).toFixed(2)}%
-      </div>
-      <div>To win: ${netWin.toFixed(2)}</div>
-      <div>To lose: ${amountLost.toFixed(2)}</div>
-    </div>
+    <>
+      <Input
+        type="number"
+        placeholder="Moneyline Odds"
+        onChange={(e) => setOdds(e.target.value)}
+      />
+      <Input
+        type="number"
+        placeholder="Wager"
+        onChange={(e) => setWager(e.target.value)}
+      />
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Win Probability</TableHead>
+            <TableHead>Win Amount</TableHead>
+            <TableHead>Loss Probability</TableHead>
+            <TableHead>Loss Amount</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              {moneylineToImpliedProbability(odds).toFixed(2)}%
+            </TableCell>
+            <TableCell>${netWin.toFixed(2)}</TableCell>
+            <TableCell>
+              {moneylineToImpliedProbability(odds, true).toFixed(2)}%
+            </TableCell>
+            <TableCell>${amountLost.toFixed(2)}</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </>
   );
 }
 
-function moneylineToImpliedProbability(odds: string): number {
+function moneylineToImpliedProbability(
+  odds: string,
+  complement: boolean = false
+): number {
   const moneyline = parseFloat(odds);
   if (isNaN(moneyline)) {
     return 0;
@@ -46,20 +70,22 @@ function moneylineToImpliedProbability(odds: string): number {
   } else {
     impliedProbability = -moneyline / (-moneyline + 100);
   }
-  return impliedProbability * 100;
+  impliedProbability *= 100;
+
+  return complement ? 100 - impliedProbability : impliedProbability;
 }
 
-function calculateNetWin(odds: string, bet: string): number {
+function calculateNetWin(odds: string, wager: string): number {
   const moneyline = parseFloat(odds);
-  const betAmount = parseFloat(bet);
-  if (isNaN(moneyline) || isNaN(betAmount)) {
+  const wagerFloat = parseFloat(wager);
+  if (isNaN(moneyline) || isNaN(wagerFloat)) {
     return 0;
   }
   let netWin: number;
   if (moneyline > 0) {
-    netWin = (moneyline / 100) * betAmount;
+    netWin = (moneyline / 100) * wagerFloat;
   } else {
-    netWin = (100 / -moneyline) * betAmount;
+    netWin = (100 / -moneyline) * wagerFloat;
   }
   return netWin;
 }
