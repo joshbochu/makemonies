@@ -16,7 +16,8 @@ export default function Home() {
   const [wager, setWager] = useState("");
 
   const netWin = calculateNetWin(odds, wager);
-  const amountLost = parseFloat(wager) || 0;
+  const wagerFloat = parseFloat(wager) || 0;
+  const roi = (netWin / wagerFloat) * 100 || 0;
 
   return (
     <>
@@ -35,6 +36,7 @@ export default function Home() {
           <TableRow>
             <TableHead>Win Probability</TableHead>
             <TableHead>Win Amount</TableHead>
+            <TableHead>ROI</TableHead>
             <TableHead>Loss Probability</TableHead>
             <TableHead>Loss Amount</TableHead>
           </TableRow>
@@ -45,10 +47,11 @@ export default function Home() {
               {moneylineToImpliedProbability(odds).toFixed(2)}%
             </TableCell>
             <TableCell>${netWin.toFixed(2)}</TableCell>
+            <TableCell>{roi.toFixed(2)}%</TableCell>
             <TableCell>
               {moneylineToImpliedProbability(odds, true).toFixed(2)}%
             </TableCell>
-            <TableCell>${amountLost.toFixed(2)}</TableCell>
+            <TableCell>${wagerFloat.toFixed(2)}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
