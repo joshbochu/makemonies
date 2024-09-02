@@ -46,6 +46,8 @@ export default function Home() {
   const lossProbability = 1 - winProbability;
   const roi = (netWin / wagerFloat) * 100 || 0;
 
+  const commonOdds = [-500, -400, -300, -200, -100, 100, 200, 300, 400, 500];
+
   return (
     <div className="container mx-auto p-4">
       <Card className="mb-8">
@@ -53,14 +55,27 @@ export default function Home() {
           <CardTitle>Sports Betting Calculator</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          <div className="flex flex-wrap gap-2 mb-4">
+            {commonOdds.map((odd) => (
+              <button
+                key={odd}
+                className="px-2 py-1 text-sm border rounded"
+                onClick={() => setOdds(odd.toString())}
+              >
+                {odd > 0 ? `+${odd}` : odd}
+              </button>
+            ))}
+          </div>
           <Input
             type="number"
             placeholder="Moneyline Odds"
+            value={odds}
             onChange={(e) => setOdds(e.target.value)}
           />
           <Input
             type="number"
             placeholder="Wager"
+            value={wager}
             onChange={(e) => setWager(e.target.value)}
           />
         </CardContent>
