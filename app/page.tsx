@@ -38,18 +38,14 @@ function calculateNetWin(odds: string, wager: string): number {
 
 export default function Home() {
   const [odds, setOdds] = useState("");
+  const [winAmount, setWinAmount] = useState("");
   const [wager, setWager] = useState("");
 
-  const netWin = calculateNetWin(odds, wager);
-  const wagerFloat = parseFloat(wager) || 0;
-  const winProbability = moneylineToImpliedProbability(odds);
-  const lossProbability = 1 - winProbability;
-  const roi = (netWin / wagerFloat) * 100 || 0;
-
   const commonOdds = [-500, -400, -300, -200, -100, 100, 200, 300, 400, 500];
-  const toWinAmounts = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+  const commonWinAmounts = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+  const commonWagers = [10, 25, 50, 100, 250, 500, 1000];
 
-  const setWagerForToWin = (toWin: number): number => {
+  const calculateWager = (toWin: number): number => {
     const ml = parseInt(odds);
     if (isNaN(ml)) return 0;
 
@@ -61,6 +57,28 @@ export default function Home() {
     }
     return calculatedWager;
   };
+
+  const updateWinAmount = (newWinAmount: string) => {
+    setWinAmount(newWinAmount);
+    setWager(calculateWager(parseFloat(newWinAmount)).toFixed(2));
+  };
+
+  const updateWager = (newWager: string) => {
+    setWager(newWager);
+    const ml = parseInt(odds);
+    if (!isNaN(ml)) {
+      const calculatedWin = ml > 0 
+        ? (parseFloat(newWager) * ml) / 100 
+        : (parseFloat(newWager) * 100) / Math.abs(ml);
+      setWinAmount(calculatedWin.toFixed(2));
+    }
+  };
+
+  const netWin = calculateNetWin(odds, wager);
+  const wagerFloat = parseFloat(wager) || 0;
+  const winProbability = moneylineToImpliedProbability(odds);
+  const lossProbability = 1 - winProbability;
+  const roi = (netWin / wagerFloat) * 100 || 0;
 
   return (
     <div className="container mx-auto p-4">
@@ -93,43 +111,56 @@ export default function Home() {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-2">2. Set Wager</h3>
-            <div className="flex items-center gap-4">
-              <div className="flex-grow">
-                <Input
-                  type="number"
-                  placeholder="Enter wager amount"
-                  value={wager}
-                  onChange={(e) => setWager(e.target.value)}
-                />
-              </div>
-              <span>or</span>
-              <div>
-                <label className="text-sm font-medium mb-1 block">To Win:</label>
-                <div className="flex flex-wrap gap-2">
-                  {toWinAmounts.map((amount) => (
-                    <button
-                      key={amount}
-                      className={`px-2 py-1 text-sm border rounded transition-colors ${
-                        parseFloat(wager) === setWagerForToWin(amount)
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-background hover:bg-secondary'
-                      }`}
-                      onClick={() => setWager(setWagerForToWin(amount).toFixed(2))}
-                    >
-                      ${amount}
-                    </button>
-                  ))}
-                </div>
-              </div>
+            <h3 className="text-lg font-semibold mb-2">2. Set Win Amount</h3>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {commonWinAmounts.map((amount) => (
+                <button
+                  key={amount}
+                  className={`px-2 py-1 text-sm border rounded transition-colors ${
+                    winAmount === amount.toString() ? 'bg-primary text-primary-foreground' : 'bg-background hover:bg-secondary'
+                  }`}
+                  onClick={() => updateWinAmount(amount.toString())}
+                >
+                  ${amount}
+                </button>
+              ))}
             </div>
+            <Input
+              type="number"
+              placeholder="Enter win amount"
+              value={winAmount}
+              onChange={(e) => updateWinAmount(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-2">3. Set Wager Amount</h3>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {commonWagers.map((amount) => (
+                <button
+                  key={amount}
+                  className={`px-2 py-1 text-sm border rounded transition-colors ${
+                    wager === amount.toString() ? 'bg-primary text-primary-foreground' : 'bg-background hover:bg-secondary'
+                  }`}
+                  onClick={() => updateWager(amount.toString())}
+                >
+                  ${amount}
+                </button>
+              ))}
+            </div>
+            <Input
+              type="number"
+              placeholder="Enter wager amount"
+              value={wager}
+              onChange={(e) => updateWager(e.target.value)}
+            />
           </div>
 
           <div className="bg-secondary p-4 rounded-lg">
             <h3 className="text-lg font-semibold mb-2">Bet Summary</h3>
             <p>Odds: {odds ? (parseInt(odds) > 0 ? `+${odds}` : odds) : 'N/A'}</p>
             <p>Wager: ${parseFloat(wager || '0').toFixed(2)}</p>
-            <p>Potential Win: ${netWin.toFixed(2)}</p>
+            <p>To Win: ${parseFloat(winAmount || '0').toFixed(2)}</p>
           </div>
         </CardContent>
       </Card>
