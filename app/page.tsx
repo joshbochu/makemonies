@@ -49,9 +49,9 @@ export default function Home() {
   const commonOdds = [-500, -400, -300, -200, -100, 100, 200, 300, 400, 500];
   const toWinAmounts = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
 
-  const setWagerForToWin = (toWin: number) => {
+  const setWagerForToWin = (toWin: number): number => {
     const ml = parseInt(odds);
-    if (isNaN(ml)) return;
+    if (isNaN(ml)) return 0;
 
     let calculatedWager;
     if (ml > 0) {
@@ -59,7 +59,7 @@ export default function Home() {
     } else {
       calculatedWager = (toWin * Math.abs(ml)) / 100;
     }
-    setWager(calculatedWager.toFixed(2));
+    return calculatedWager;
   };
 
   return (
@@ -68,43 +68,68 @@ export default function Home() {
         <CardHeader>
           <CardTitle>Sports Betting Calculator</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex flex-wrap gap-2 mb-4">
-            {commonOdds.map((odd) => (
-              <button
-                key={odd}
-                className="px-2 py-1 text-sm border rounded"
-                onClick={() => setOdds(odd.toString())}
-              >
-                {odd > 0 ? `+${odd}` : odd}
-              </button>
-            ))}
-          </div>
-          <Input
-            type="number"
-            placeholder="Moneyline Odds"
-            value={odds}
-            onChange={(e) => setOdds(e.target.value)}
-          />
-          <Input
-            type="number"
-            placeholder="Wager"
-            value={wager}
-            onChange={(e) => setWager(e.target.value)}
-          />
+        <CardContent className="space-y-6">
           <div>
-            <p className="text-sm font-medium mb-2">To Win:</p>
-            <div className="flex flex-wrap gap-2">
-              {toWinAmounts.map((amount) => (
+            <h3 className="text-lg font-semibold mb-2">1. Select Odds</h3>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {commonOdds.map((odd) => (
                 <button
-                  key={amount}
-                  className="px-2 py-1 text-sm border rounded"
-                  onClick={() => setWagerForToWin(amount)}
+                  key={odd}
+                  className={`px-3 py-1 text-sm border rounded transition-colors ${
+                    odds === odd.toString() ? 'bg-primary text-primary-foreground' : 'bg-background hover:bg-secondary'
+                  }`}
+                  onClick={() => setOdds(odd.toString())}
                 >
-                  ${amount}
+                  {odd > 0 ? `+${odd}` : odd}
                 </button>
               ))}
             </div>
+            <Input
+              type="number"
+              placeholder="Or enter custom odds"
+              value={odds}
+              onChange={(e) => setOdds(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-2">2. Set Wager</h3>
+            <div className="flex items-center gap-4">
+              <div className="flex-grow">
+                <Input
+                  type="number"
+                  placeholder="Enter wager amount"
+                  value={wager}
+                  onChange={(e) => setWager(e.target.value)}
+                />
+              </div>
+              <span>or</span>
+              <div>
+                <label className="text-sm font-medium mb-1 block">To Win:</label>
+                <div className="flex flex-wrap gap-2">
+                  {toWinAmounts.map((amount) => (
+                    <button
+                      key={amount}
+                      className={`px-2 py-1 text-sm border rounded transition-colors ${
+                        parseFloat(wager) === setWagerForToWin(amount)
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-background hover:bg-secondary'
+                      }`}
+                      onClick={() => setWager(setWagerForToWin(amount).toFixed(2))}
+                    >
+                      ${amount}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-secondary p-4 rounded-lg">
+            <h3 className="text-lg font-semibold mb-2">Bet Summary</h3>
+            <p>Odds: {odds ? (parseInt(odds) > 0 ? `+${odds}` : odds) : 'N/A'}</p>
+            <p>Wager: ${parseFloat(wager || '0').toFixed(2)}</p>
+            <p>Potential Win: ${netWin.toFixed(2)}</p>
           </div>
         </CardContent>
       </Card>
