@@ -191,56 +191,56 @@ export default function Home() {
         <CardHeader>
           <CardTitle>Bet Summary</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-6">
           {/* User Inputs */}
-          <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+          <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
             <h4 className="text-lg font-medium mb-2 text-blue-800">Your Inputs</h4>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-4">
               <div>
-                <p className="text-sm text-blue-600">Odds</p>
-                <p className="text-lg font-medium text-blue-900">
+                <p className="text-sm text-blue-600 mb-1">Odds</p>
+                <p className="text-3xl font-bold text-blue-900">
                   {odds ? (parseInt(odds) > 0 ? `+${odds}` : odds) : "N/A"}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-blue-600">Wager</p>
-                <p className="text-lg font-medium text-blue-900">
+                <p className="text-sm text-blue-600 mb-1">Wager</p>
+                <p className="text-3xl font-bold text-blue-900">
                   ${formatNumber(parseFloat(wager || "0"))}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-blue-600">To Win</p>
-                <p className="text-lg font-medium text-blue-900">
+                <p className="text-sm text-blue-600 mb-1">To Win</p>
+                <p className="text-3xl font-bold text-blue-900">
                   ${formatNumber(parseFloat(winAmount || "0"))}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Potential Outcomes */}
-          <div className="grid grid-cols-2 gap-6 mb-6">
-            <div className="p-4 bg-red-50 rounded-lg border border-red-100">
-              <h4 className="text-lg font-medium mb-2 text-red-800">
-                Potential Loss
-              </h4>
-              <p className="text-3xl font-bold text-red-600">
-                -${formatNumber(parseFloat(wager || "0"))}
-              </p>
-              <p className="text-sm text-red-700 mt-2">
-                Probability: {(lossProbability * 100).toFixed(2)}%
-              </p>
-            </div>
-            <div className="p-4 bg-green-50 rounded-lg border border-green-100">
-              <h4 className="text-lg font-medium mb-2 text-green-800">
-                Potential Gain
-              </h4>
-              <p className="text-3xl font-bold text-green-600">
-                +${formatNumber(parseFloat(winAmount || "0"))}
-              </p>
-              <p className="text-sm text-green-700 mt-2">
-                Probability: {(winProbability * 100).toFixed(2)}%
-              </p>
-            </div>
+          {/* Potential Loss */}
+          <div className="p-4 bg-red-50 rounded-lg border border-red-100">
+            <h4 className="text-lg font-medium mb-2 text-red-800">
+              Potential Loss
+            </h4>
+            <p className="text-3xl font-bold text-red-600">
+              -${formatNumber(parseFloat(wager || "0"))}
+            </p>
+            <p className="text-sm text-red-700 mt-2">
+              Probability: {(lossProbability * 100).toFixed(2)}%
+            </p>
+          </div>
+
+          {/* Potential Gain */}
+          <div className="p-4 bg-green-50 rounded-lg border border-green-100">
+            <h4 className="text-lg font-medium mb-2 text-green-800">
+              Potential Gain
+            </h4>
+            <p className="text-3xl font-bold text-green-600">
+              +${formatNumber(parseFloat(winAmount || "0"))}
+            </p>
+            <p className="text-sm text-green-700 mt-2">
+              Probability: {(winProbability * 100).toFixed(2)}%
+            </p>
           </div>
 
           {/* ROI */}
