@@ -1,6 +1,6 @@
 "use client";
-import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -12,23 +12,26 @@ import {
 import { useState } from "react";
 
 // Add these functions
-function moneylineToImpliedProbability(moneyline: string, isLoss = false): number {
+function moneylineToImpliedProbability(
+  moneyline: string,
+  isLoss = false
+): number {
   const ml = parseInt(moneyline);
   if (isNaN(ml)) return 0;
-  
+
   if (ml > 0) {
     return isLoss ? (100 / (ml + 100)) * 100 : 100 / (ml + 100);
   } else {
-    return isLoss ? ((-ml) / (-ml + 100)) * 100 : (-ml) / (-ml + 100);
+    return isLoss ? (-ml / (-ml + 100)) * 100 : -ml / (-ml + 100);
   }
 }
 
 function calculateNetWin(odds: string, wager: string): number {
   const ml = parseInt(odds);
   const wagerAmount = parseFloat(wager);
-  
+
   if (isNaN(ml) || isNaN(wagerAmount)) return 0;
-  
+
   if (ml > 0) {
     return (wagerAmount * ml) / 100;
   } else {
@@ -64,9 +67,9 @@ export default function Home() {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="mb-8">
         <CardHeader>
-          <CardTitle>Results</CardTitle>
+          <CardTitle>Win Information</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
@@ -75,8 +78,6 @@ export default function Home() {
                 <TableHead>Win Probability</TableHead>
                 <TableHead>Win Amount</TableHead>
                 <TableHead>ROI</TableHead>
-                <TableHead>Loss Probability</TableHead>
-                <TableHead>Loss Amount</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -86,6 +87,26 @@ export default function Home() {
                 </TableCell>
                 <TableCell>${netWin.toFixed(2)}</TableCell>
                 <TableCell>{roi.toFixed(2)}%</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Loss Information</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Loss Probability</TableHead>
+                <TableHead>Loss Amount</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
                 <TableCell>
                   {moneylineToImpliedProbability(odds, true).toFixed(2)}%
                 </TableCell>
