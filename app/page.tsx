@@ -28,6 +28,14 @@ function calculateNetWin(odds: string, wager: string): number {
   }
 }
 
+// Add this function at the top of your file, outside the Home component
+const formatNumber = (num: number): string => {
+  return new Intl.NumberFormat('en-US', { 
+    minimumFractionDigits: 2, 
+    maximumFractionDigits: 2 
+  }).format(num);
+};
+
 export default function Home() {
   const [odds, setOdds] = useState("");
   const [winAmount, setWinAmount] = useState("");
@@ -197,13 +205,13 @@ export default function Home() {
               <div>
                 <p className="text-sm text-blue-600">Wager</p>
                 <p className="text-lg font-medium text-blue-900">
-                  ${parseFloat(wager || "0").toFixed(2)}
+                  ${formatNumber(parseFloat(wager || "0"))}
                 </p>
               </div>
               <div>
                 <p className="text-sm text-blue-600">To Win</p>
                 <p className="text-lg font-medium text-blue-900">
-                  ${parseFloat(winAmount || "0").toFixed(2)}
+                  ${formatNumber(parseFloat(winAmount || "0"))}
                 </p>
               </div>
             </div>
@@ -216,7 +224,7 @@ export default function Home() {
                 Potential Loss
               </h4>
               <p className="text-3xl font-bold text-red-600">
-                -${parseFloat(wager || "0").toFixed(2)}
+                -${formatNumber(parseFloat(wager || "0"))}
               </p>
               <p className="text-sm text-red-700 mt-2">
                 Probability: {(lossProbability * 100).toFixed(2)}%
@@ -227,7 +235,7 @@ export default function Home() {
                 Potential Gain
               </h4>
               <p className="text-3xl font-bold text-green-600">
-                +${parseFloat(winAmount || "0").toFixed(2)}
+                +${formatNumber(parseFloat(winAmount || "0"))}
               </p>
               <p className="text-sm text-green-700 mt-2">
                 Probability: {(winProbability * 100).toFixed(2)}%
@@ -236,11 +244,13 @@ export default function Home() {
           </div>
 
           {/* ROI */}
-          <div className="text-center">
-            <p className="text-sm text-gray-600 mb-1">Return on Investment (ROI)</p>
-            <div className="inline-block bg-amber-50 text-amber-900 text-2xl font-bold px-6 py-3 rounded-full border border-amber-200">
-              {roi.toFixed(2)}%
-            </div>
+          <div className="p-4 bg-amber-50 rounded-lg border border-amber-200">
+            <h4 className="text-lg font-medium mb-2 text-amber-800">
+              Return on Investment (ROI)
+            </h4>
+            <p className="text-3xl font-bold text-amber-700">
+              {formatNumber(roi)}%
+            </p>
           </div>
         </CardContent>
       </Card>
