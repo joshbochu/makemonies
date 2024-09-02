@@ -12,17 +12,14 @@ import {
 import { useState } from "react";
 
 // Add these functions
-function moneylineToImpliedProbability(
-  moneyline: string,
-  isLoss = false
-): number {
+function moneylineToImpliedProbability(moneyline: string): number {
   const ml = parseInt(moneyline);
   if (isNaN(ml)) return 0;
 
   if (ml > 0) {
-    return isLoss ? (100 / (ml + 100)) * 100 : 100 / (ml + 100);
+    return 100 / (ml + 100);
   } else {
-    return isLoss ? (-ml / (-ml + 100)) * 100 : -ml / (-ml + 100);
+    return Math.abs(ml) / (Math.abs(ml) + 100);
   }
 }
 
@@ -45,6 +42,8 @@ export default function Home() {
 
   const netWin = calculateNetWin(odds, wager);
   const wagerFloat = parseFloat(wager) || 0;
+  const winProbability = moneylineToImpliedProbability(odds);
+  const lossProbability = 1 - winProbability;
   const roi = (netWin / wagerFloat) * 100 || 0;
 
   return (
@@ -82,9 +81,7 @@ export default function Home() {
             </TableHeader>
             <TableBody>
               <TableRow>
-                <TableCell>
-                  {moneylineToImpliedProbability(odds).toFixed(2)}%
-                </TableCell>
+                <TableCell>{(winProbability * 100).toFixed(2)}%</TableCell>
                 <TableCell>${netWin.toFixed(2)}</TableCell>
                 <TableCell>{roi.toFixed(2)}%</TableCell>
               </TableRow>
@@ -107,9 +104,7 @@ export default function Home() {
             </TableHeader>
             <TableBody>
               <TableRow>
-                <TableCell>
-                  {moneylineToImpliedProbability(odds, true).toFixed(2)}%
-                </TableCell>
+                <TableCell>{(lossProbability * 100).toFixed(2)}%</TableCell>
                 <TableCell>${wagerFloat.toFixed(2)}</TableCell>
               </TableRow>
             </TableBody>
