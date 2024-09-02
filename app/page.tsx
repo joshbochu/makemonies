@@ -177,58 +177,34 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="bg-secondary p-4 rounded-lg">
-            <h3 className="text-lg font-semibold mb-2">Bet Summary</h3>
-            <p>Odds: {odds ? (parseInt(odds) > 0 ? `+${odds}` : odds) : 'N/A'}</p>
-            <p>Wager: ${parseFloat(wager || '0').toFixed(2)}</p>
-            <p>To Win: ${parseFloat(winAmount || '0').toFixed(2)}</p>
+          {/* Add the new bet summary section here */}
+          <div className="bg-secondary p-6 rounded-lg shadow-md">
+            <h3 className="text-xl font-semibold mb-4">Bet Summary</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm text-gray-600 mb-1">Odds</p>
+                <p className="text-lg font-medium">{odds ? (parseInt(odds) > 0 ? `+${odds}` : odds) : 'N/A'}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 mb-1">Wager</p>
+                <p className="text-lg font-medium">${parseFloat(wager || '0').toFixed(2)}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 mb-1">To Win</p>
+                <p className="text-lg font-medium">${parseFloat(winAmount || '0').toFixed(2)}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 mb-1">Win Probability</p>
+                <p className="text-lg font-medium">{(winProbability * 100).toFixed(2)}%</p>
+              </div>
+            </div>
+            <div className="mt-4">
+              <p className="text-sm text-gray-600 mb-1">Return on Investment (ROI)</p>
+              <div className="inline-block bg-green-100 text-green-800 text-lg font-medium px-4 py-2 rounded-full">
+                {roi.toFixed(2)}%
+              </div>
+            </div>
           </div>
-        </CardContent>
-      </Card>
-
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>Win Information</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Win Probability</TableHead>
-                <TableHead>Win Amount</TableHead>
-                <TableHead>ROI</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell>{(winProbability * 100).toFixed(2)}%</TableCell>
-                <TableCell>${netWin.toFixed(2)}</TableCell>
-                <TableCell>{roi.toFixed(2)}%</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Loss Information</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Loss Probability</TableHead>
-                <TableHead>Loss Amount</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell>{(lossProbability * 100).toFixed(2)}%</TableCell>
-                <TableCell>${wagerFloat.toFixed(2)}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
         </CardContent>
       </Card>
     </div>
