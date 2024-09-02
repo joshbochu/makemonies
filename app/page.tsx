@@ -89,7 +89,7 @@ export default function Home() {
         <CardContent className="space-y-6">
           <div>
             <h3 className="text-lg font-semibold mb-2">1. Select Odds</h3>
-            <div className="flex flex-wrap gap-2 mb-2">
+            <div className="flex flex-wrap justify-center gap-2 mb-2">
               {commonOdds.map((odd) => (
                 <button
                   key={odd}
@@ -102,17 +102,24 @@ export default function Home() {
                 </button>
               ))}
             </div>
-            <Input
-              type="number"
-              placeholder="Or enter custom odds"
-              value={odds}
-              onChange={(e) => setOdds(e.target.value)}
-            />
+            <div className="text-center my-4">
+              <span className="text-gray-600 text-sm font-medium">OR</span>
+            </div>
+            <div className="flex justify-center">
+              <div className="w-full max-w-xs">
+                <Input
+                  type="number"
+                  placeholder="Enter custom odds"
+                  value={odds}
+                  onChange={(e) => setOdds(e.target.value)}
+                />
+              </div>
+            </div>
           </div>
 
           <div>
             <h3 className="text-lg font-semibold mb-2">2. Set Win Amount</h3>
-            <div className="flex flex-wrap gap-2 mb-2">
+            <div className="flex flex-wrap justify-center gap-2 mb-2">
               {commonWinAmounts.map((amount) => (
                 <button
                   key={amount}
@@ -125,17 +132,24 @@ export default function Home() {
                 </button>
               ))}
             </div>
-            <Input
-              type="number"
-              placeholder="Enter win amount"
-              value={winAmount}
-              onChange={(e) => updateWinAmount(e.target.value)}
-            />
+            <div className="text-center my-4">
+              <span className="text-gray-600 text-sm font-medium">OR</span>
+            </div>
+            <div className="flex justify-center">
+              <div className="w-full max-w-xs">
+                <Input
+                  type="number"
+                  placeholder="Enter custom win amount"
+                  value={winAmount}
+                  onChange={(e) => updateWinAmount(e.target.value)}
+                />
+              </div>
+            </div>
           </div>
 
           <div>
             <h3 className="text-lg font-semibold mb-2">3. Set Wager Amount</h3>
-            <div className="flex flex-wrap gap-2 mb-2">
+            <div className="flex flex-wrap justify-center gap-2 mb-2">
               {commonWagers.map((amount) => (
                 <button
                   key={amount}
@@ -148,12 +162,19 @@ export default function Home() {
                 </button>
               ))}
             </div>
-            <Input
-              type="number"
-              placeholder="Enter wager amount"
-              value={wager}
-              onChange={(e) => updateWager(e.target.value)}
-            />
+            <div className="text-center my-4">
+              <span className="text-gray-600 text-sm font-medium">OR</span>
+            </div>
+            <div className="flex justify-center">
+              <div className="w-full max-w-xs">
+                <Input
+                  type="number"
+                  placeholder="Enter custom wager amount"
+                  value={wager}
+                  onChange={(e) => updateWager(e.target.value)}
+                />
+              </div>
+            </div>
           </div>
 
           <div className="bg-secondary p-4 rounded-lg">
