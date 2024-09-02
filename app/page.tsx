@@ -180,27 +180,44 @@ export default function Home() {
           {/* Add the new bet summary section here */}
           <div className="bg-secondary p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold mb-4">Bet Summary</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Odds</p>
-                <p className="text-lg font-medium">{odds ? (parseInt(odds) > 0 ? `+${odds}` : odds) : 'N/A'}</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Wager</p>
-                <p className="text-lg font-medium">${parseFloat(wager || '0').toFixed(2)}</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-600 mb-1">To Win</p>
-                <p className="text-lg font-medium">${parseFloat(winAmount || '0').toFixed(2)}</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-600 mb-1">Win Probability</p>
-                <p className="text-lg font-medium">{(winProbability * 100).toFixed(2)}%</p>
+            
+            {/* User Inputs */}
+            <div className="mb-6 p-4 bg-gray-100 rounded-lg">
+              <h4 className="text-lg font-medium mb-2">Your Inputs</h4>
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <p className="text-sm text-gray-600">Odds</p>
+                  <p className="text-lg font-medium">{odds ? (parseInt(odds) > 0 ? `+${odds}` : odds) : 'N/A'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Wager</p>
+                  <p className="text-lg font-medium">${parseFloat(wager || '0').toFixed(2)}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">To Win</p>
+                  <p className="text-lg font-medium">${parseFloat(winAmount || '0').toFixed(2)}</p>
+                </div>
               </div>
             </div>
-            <div className="mt-4">
+            
+            {/* Potential Outcomes */}
+            <div className="grid grid-cols-2 gap-6">
+              <div className="p-4 bg-red-100 rounded-lg">
+                <h4 className="text-lg font-medium mb-2 text-red-800">Potential Loss</h4>
+                <p className="text-3xl font-bold text-red-600">-${parseFloat(wager || '0').toFixed(2)}</p>
+                <p className="text-sm text-red-800 mt-2">Probability: {(lossProbability * 100).toFixed(2)}%</p>
+              </div>
+              <div className="p-4 bg-green-100 rounded-lg">
+                <h4 className="text-lg font-medium mb-2 text-green-800">Potential Gain</h4>
+                <p className="text-3xl font-bold text-green-600">+${parseFloat(winAmount || '0').toFixed(2)}</p>
+                <p className="text-sm text-green-800 mt-2">Probability: {(winProbability * 100).toFixed(2)}%</p>
+              </div>
+            </div>
+            
+            {/* ROI */}
+            <div className="mt-6 text-center">
               <p className="text-sm text-gray-600 mb-1">Return on Investment (ROI)</p>
-              <div className="inline-block bg-green-100 text-green-800 text-lg font-medium px-4 py-2 rounded-full">
+              <div className="inline-block bg-blue-100 text-blue-800 text-2xl font-bold px-6 py-3 rounded-full">
                 {roi.toFixed(2)}%
               </div>
             </div>
