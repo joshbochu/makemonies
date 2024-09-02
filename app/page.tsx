@@ -175,68 +175,71 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </CardContent>
+      </Card>
 
-          {/* Add the new bet summary section here */}
-          <div className="bg-stone-50 p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-4">Bet Summary</h3>
-
-            {/* User Inputs */}
-            <div className="mb-6 p-4 bg-gray-100 rounded-lg">
-              <h4 className="text-lg font-medium mb-2">Your Inputs</h4>
-              <div className="grid grid-cols-3 gap-4">
-                <div>
-                  <p className="text-sm text-gray-600">Odds</p>
-                  <p className="text-lg font-medium">
-                    {odds ? (parseInt(odds) > 0 ? `+${odds}` : odds) : "N/A"}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Wager</p>
-                  <p className="text-lg font-medium">
-                    ${parseFloat(wager || "0").toFixed(2)}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">To Win</p>
-                  <p className="text-lg font-medium">
-                    ${parseFloat(winAmount || "0").toFixed(2)}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Potential Outcomes */}
-            <div className="grid grid-cols-2 gap-6">
-              <div className="p-4 bg-red-100 rounded-lg">
-                <h4 className="text-lg font-medium mb-2 text-red-800">
-                  Potential Loss
-                </h4>
-                <p className="text-3xl font-bold text-red-600">
-                  -${parseFloat(wager || "0").toFixed(2)}
-                </p>
-                <p className="text-sm text-red-800 mt-2">
-                  Probability: {(lossProbability * 100).toFixed(2)}%
+      {/* New separate card for Bet Summary */}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle>Bet Summary</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {/* User Inputs */}
+          <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+            <h4 className="text-lg font-medium mb-2 text-blue-800">Your Inputs</h4>
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <p className="text-sm text-blue-600">Odds</p>
+                <p className="text-lg font-medium text-blue-900">
+                  {odds ? (parseInt(odds) > 0 ? `+${odds}` : odds) : "N/A"}
                 </p>
               </div>
-              <div className="p-4 bg-green-100 rounded-lg">
-                <h4 className="text-lg font-medium mb-2 text-green-800">
-                  Potential Gain
-                </h4>
-                <p className="text-3xl font-bold text-green-600">
-                  +${parseFloat(winAmount || "0").toFixed(2)}
+              <div>
+                <p className="text-sm text-blue-600">Wager</p>
+                <p className="text-lg font-medium text-blue-900">
+                  ${parseFloat(wager || "0").toFixed(2)}
                 </p>
-                <p className="text-sm text-green-800 mt-2">
-                  Probability: {(winProbability * 100).toFixed(2)}%
+              </div>
+              <div>
+                <p className="text-sm text-blue-600">To Win</p>
+                <p className="text-lg font-medium text-blue-900">
+                  ${parseFloat(winAmount || "0").toFixed(2)}
                 </p>
               </div>
             </div>
+          </div>
 
-            {/* ROI */}
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600 mb-1">Return on Investment (ROI)</p>
-              <div className="inline-block bg-amber-50 text-amber-900 text-2xl font-bold px-6 py-3 rounded-full border border-amber-200">
-                {roi.toFixed(2)}%
-              </div>
+          {/* Potential Outcomes */}
+          <div className="grid grid-cols-2 gap-6 mb-6">
+            <div className="p-4 bg-red-50 rounded-lg border border-red-100">
+              <h4 className="text-lg font-medium mb-2 text-red-800">
+                Potential Loss
+              </h4>
+              <p className="text-3xl font-bold text-red-600">
+                -${parseFloat(wager || "0").toFixed(2)}
+              </p>
+              <p className="text-sm text-red-700 mt-2">
+                Probability: {(lossProbability * 100).toFixed(2)}%
+              </p>
+            </div>
+            <div className="p-4 bg-green-50 rounded-lg border border-green-100">
+              <h4 className="text-lg font-medium mb-2 text-green-800">
+                Potential Gain
+              </h4>
+              <p className="text-3xl font-bold text-green-600">
+                +${parseFloat(winAmount || "0").toFixed(2)}
+              </p>
+              <p className="text-sm text-green-700 mt-2">
+                Probability: {(winProbability * 100).toFixed(2)}%
+              </p>
+            </div>
+          </div>
+
+          {/* ROI */}
+          <div className="text-center">
+            <p className="text-sm text-gray-600 mb-1">Return on Investment (ROI)</p>
+            <div className="inline-block bg-amber-50 text-amber-900 text-2xl font-bold px-6 py-3 rounded-full border border-amber-200">
+              {roi.toFixed(2)}%
             </div>
           </div>
         </CardContent>
