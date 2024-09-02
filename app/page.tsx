@@ -47,6 +47,20 @@ export default function Home() {
   const roi = (netWin / wagerFloat) * 100 || 0;
 
   const commonOdds = [-500, -400, -300, -200, -100, 100, 200, 300, 400, 500];
+  const toWinAmounts = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+
+  const setWagerForToWin = (toWin: number) => {
+    const ml = parseInt(odds);
+    if (isNaN(ml)) return;
+
+    let calculatedWager;
+    if (ml > 0) {
+      calculatedWager = (toWin * 100) / ml;
+    } else {
+      calculatedWager = (toWin * Math.abs(ml)) / 100;
+    }
+    setWager(calculatedWager.toFixed(2));
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -78,6 +92,20 @@ export default function Home() {
             value={wager}
             onChange={(e) => setWager(e.target.value)}
           />
+          <div>
+            <p className="text-sm font-medium mb-2">To Win:</p>
+            <div className="flex flex-wrap gap-2">
+              {toWinAmounts.map((amount) => (
+                <button
+                  key={amount}
+                  className="px-2 py-1 text-sm border rounded"
+                  onClick={() => setWagerForToWin(amount)}
+                >
+                  ${amount}
+                </button>
+              ))}
+            </div>
+          </div>
         </CardContent>
       </Card>
 
