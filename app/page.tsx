@@ -89,23 +89,21 @@ export default function Home() {
         </CardHeader>
         <CardContent className="space-y-6">
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="text-lg font-semibold">1. Select Odds</h3>
-              <div className="flex-grow flex flex-wrap justify-between gap-2 ml-4">
-                {commonOdds.map((odd) => (
-                  <button
-                    key={odd}
-                    className={`px-3 py-1 text-sm border rounded transition-colors ${
-                      odds === odd.toString()
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-background hover:bg-secondary"
-                    }`}
-                    onClick={() => setOdds(odd.toString())}
-                  >
-                    {odd > 0 ? `+${odd}` : odd}
-                  </button>
-                ))}
-              </div>
+            <h3 className="text-lg font-semibold mb-2">1. Select Odds</h3>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {commonOdds.map((odd) => (
+                <button
+                  key={odd}
+                  className={`px-3 py-1 text-sm border rounded transition-colors ${
+                    odds === odd.toString()
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-background hover:bg-secondary"
+                  }`}
+                  onClick={() => setOdds(odd.toString())}
+                >
+                  {odd > 0 ? `+${odd}` : odd}
+                </button>
+              ))}
             </div>
             <div className="text-center my-4">
               <span className="text-gray-600 text-sm font-medium">OR</span>
@@ -123,23 +121,21 @@ export default function Home() {
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="text-lg font-semibold">2. Set Win Amount</h3>
-              <div className="flex-grow flex flex-wrap justify-between gap-2 ml-4">
-                {commonWinAmounts.map((amount) => (
-                  <button
-                    key={amount}
-                    className={`px-2 py-1 text-sm border rounded transition-colors ${
-                      winAmount === amount.toString()
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-background hover:bg-secondary"
-                    }`}
-                    onClick={() => updateWinAmount(amount.toString())}
-                  >
-                    ${amount}
-                  </button>
-                ))}
-              </div>
+            <h3 className="text-lg font-semibold mb-2">2. Set Win Amount</h3>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {commonWinAmounts.map((amount) => (
+                <button
+                  key={amount}
+                  className={`px-2 py-1 text-sm border rounded transition-colors ${
+                    winAmount === amount.toString()
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-background hover:bg-secondary"
+                  }`}
+                  onClick={() => updateWinAmount(amount.toString())}
+                >
+                  ${amount}
+                </button>
+              ))}
             </div>
             <div className="text-center my-4">
               <span className="text-gray-600 text-sm font-medium">OR</span>
@@ -157,23 +153,21 @@ export default function Home() {
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="text-lg font-semibold">3. Set Wager Amount</h3>
-              <div className="flex-grow flex flex-wrap justify-between gap-2 ml-4">
-                {commonWagers.map((amount) => (
-                  <button
-                    key={amount}
-                    className={`px-2 py-1 text-sm border rounded transition-colors ${
-                      wager === amount.toString()
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-background hover:bg-secondary"
-                    }`}
-                    onClick={() => updateWager(amount.toString())}
-                  >
-                    ${amount}
-                  </button>
-                ))}
-              </div>
+            <h3 className="text-lg font-semibold mb-2">3. Set Wager Amount</h3>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {commonWagers.map((amount) => (
+                <button
+                  key={amount}
+                  className={`px-2 py-1 text-sm border rounded transition-colors ${
+                    wager === amount.toString()
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-background hover:bg-secondary"
+                  }`}
+                  onClick={() => updateWager(amount.toString())}
+                >
+                  ${amount}
+                </button>
+              ))}
             </div>
             <div className="text-center my-4">
               <span className="text-gray-600 text-sm font-medium">OR</span>
@@ -226,7 +220,7 @@ export default function Home() {
           {/* Potential Loss */}
           <div className="p-4 bg-red-50 rounded-lg border border-red-100">
             <h4 className="text-lg font-medium mb-2 text-red-800">
-              Loss Chance ~{(lossProbability * 100).toFixed(0)}%
+              Loss Outcome ~{(lossProbability * 100).toFixed(0)}%
             </h4>
             <p className="text-3xl font-bold text-red-600">
               -${formatNumber(parseFloat(wager || "0"))}
@@ -236,7 +230,7 @@ export default function Home() {
           {/* Potential Gain */}
           <div className="p-4 bg-green-50 rounded-lg border border-green-100">
             <h4 className="text-lg font-medium mb-2 text-green-800">
-              Win Chance ~{(winProbability * 100).toFixed(0)}%
+              Win Outcome ~{(winProbability * 100).toFixed(0)}%
             </h4>
             <p className="text-3xl font-bold text-green-600">
               +${formatNumber(parseFloat(winAmount || "0"))}
