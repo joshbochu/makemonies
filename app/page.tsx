@@ -41,9 +41,9 @@ export default function Home() {
   const [winAmount, setWinAmount] = useState("");
   const [wager, setWager] = useState("");
 
-  const commonOdds = [-500, -400, -300, -200, -100, 100, 200, 300, 400, 500];
-  const commonWinAmounts = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
-  const commonWagers = [10, 25, 50, 100, 250, 500, 1000];
+  const commonOdds = [-600, -500, -400, -300, -200, -100, 100, 200, 300, 400, 500, 600];
+  const commonWinAmounts = [1, 10, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+  const commonWagers = [1,10, 25, 50, 100, 250, 500, 1000, 10000];
 
   const calculateWager = (toWin: number): number => {
     const ml = parseInt(odds);
@@ -90,7 +90,7 @@ export default function Home() {
         <CardContent className="space-y-6">
           <div>
             <h3 className="text-lg font-semibold mb-2">1. Select Odds</h3>
-            <div className="flex flex-wrap gap-2 mb-2">
+            <div className="grid grid-cols-3 gap-2 mb-2">
               {commonOdds.map((odd) => (
                 <button
                   key={odd}
@@ -120,7 +120,7 @@ export default function Home() {
 
           <div>
             <h3 className="text-lg font-semibold mb-2">2. Set Win Amount</h3>
-            <div className="flex flex-wrap gap-2 mb-2">
+            <div className="grid grid-cols-3 gap-2 mb-2">
               {commonWinAmounts.map((amount) => (
                 <button
                   key={amount}
@@ -150,7 +150,7 @@ export default function Home() {
 
           <div>
             <h3 className="text-lg font-semibold mb-2">3. Set Wager Amount</h3>
-            <div className="flex flex-wrap gap-2 mb-2">
+            <div className="grid grid-cols-3 gap-2 mb-2">
               {commonWagers.map((amount) => (
                 <button
                   key={amount}
