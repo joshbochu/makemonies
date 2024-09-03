@@ -105,7 +105,7 @@ export default function Home() {
                 </button>
               ))}
             </div>
-            <div className="my-4">
+            <div className="my-4 text-center">
               <span className="text-gray-600 text-sm font-medium">OR</span>
             </div>
             <div>
